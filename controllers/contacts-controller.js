@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import * as contactService from "../models/contacts.js"
-import HttpError from "../helpers/HttpError.js";
-import cntrlWrapper from "../decorators/cntrlWrapper.js";
+import { HttpError } from "../helpers/index.js";
+import { ctrlWrapper }  from "../decorators/index.js";
 
 const checkBody = ({ name = null, email = null, phone = null }) => {
   return `${!name ? 'name': ''}${!email ? ' email': ''}${!phone ? ' phone': ''}`.trim().replaceAll(' ', ', ')
@@ -25,8 +25,8 @@ const getById = async (req, res, next) => {
 }
 
 const add =  async (req, res, next) => {
-    const messageBody = checkBody(req.body)
-    if (messageBody.length>0) throw HttpError (400, `missing required ${messageBody} field`)
+    // const messageBody = checkBody(req.body)
+    // if (messageBody.length>0) throw HttpError (400, `missing required ${messageBody} field`)
     const contact = await contactService.addContact({ id: nanoid(), ...req.body })
     res.status(201).json({
       contact 
@@ -44,7 +44,7 @@ const deleteById = async (req, res, next) => {
  }
 
 const updateById = async (req, res, next) => {
-    if (Object.keys(req.body).length === 0) throw HttpError(400, `missing fields`);
+    // if (Object.keys(req.body).length === 0) throw HttpError(400, `missing fields`);
     const { id } = req.params;
     const contact = await contactService.updateContact(id, req.body);
     if (!contact) throw HttpError(404, "Not found");
@@ -54,9 +54,9 @@ const updateById = async (req, res, next) => {
 }
 
 export default {
-    getAll: cntrlWrapper(getAll),
-    getById: cntrlWrapper(getById),
-    add: cntrlWrapper(add),
-    deleteById: cntrlWrapper(deleteById),
-    updateById: cntrlWrapper(updateById)
+    getAll: ctrlWrapper(getAll),
+    getById: ctrlWrapper(getById),
+    add: ctrlWrapper(add),
+    deleteById: ctrlWrapper(deleteById),
+    updateById: ctrlWrapper(updateById)
 }

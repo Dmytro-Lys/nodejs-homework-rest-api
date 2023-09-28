@@ -1,4 +1,4 @@
-const cntrlWrapper = cntrl => {
+const ctrlWrapper = cntrl => {
     const func = async(req, res, next)=> {
         try {
             await cntrl(req, res, next);
@@ -11,4 +11,4 @@ const cntrlWrapper = cntrl => {
     return func;
 }
 
-export default cntrlWrapper;
+export default ctrlWrapper;

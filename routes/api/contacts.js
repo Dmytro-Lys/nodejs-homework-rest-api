@@ -1,10 +1,7 @@
 import express from 'express'
 import contactsController from "../../controllers/contacts-controller.js";
-import { isEmptyBody } from '../../middlewares/index.js';
-import { contactAddSchema } from '../../schemes/contacts-schemes.js';
-import { validateBody } from '../../decorators/index.js';
+import { isEmptyBody, contactAddValidate } from '../../middlewares/index.js';
 
-const contactAddValidate = validateBody(contactAddSchema)
 
 const contactsRouter = express.Router()
 

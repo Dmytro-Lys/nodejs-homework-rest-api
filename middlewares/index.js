@@ -1,2 +1,3 @@
 export { default as isEmptyBody } from "./isEmptyBody.js";
-export {default as contactAddValidate} from "./contactAddValidate.js";
+export { default as contactValidateRequired } from "./contactValidateRequired.js";
+export {default as contactValidateValues} from "./contactValidateValues.js";

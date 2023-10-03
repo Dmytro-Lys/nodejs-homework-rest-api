@@ -22,7 +22,10 @@ export const contactSchemeRequired = Joi.object({
         .messages(messagesRequiredErrors),
     phone: Joi.string()
         .required() 
-        .messages(messagesRequiredErrors)
+        .messages(messagesRequiredErrors),
+    favorite: Joi.bool()
+         .required()
+         .messages(messagesRequiredErrors)
 })
 
 export const contactSchemeValues = Joi.object({
@@ -34,5 +37,13 @@ export const contactSchemeValues = Joi.object({
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
     phone: Joi.string()
         .pattern(new RegExp(/^\(\d{3}\) \d{3}-\d{4}$/))
-         .messages(messagesPhoneErrors)
+        .messages(messagesPhoneErrors),
+    favorite: Joi.bool()
+        
+})
+
+export const contactSchemeFavorite = Joi.object({
+   favorite: Joi.bool()
+         .required()
+         .messages(messagesRequiredErrors)
 })

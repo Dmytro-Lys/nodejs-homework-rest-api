@@ -13,6 +13,10 @@ const messagesPhoneErrors = {
    "string.pattern.base": "Field {#label} must be in the format (XXX) XXX-XXXX"
 }
 
+const messagesFavoriteErrors = {
+   "any.required": "missing field {#label}"
+}
+
 export const contactSchemeAll = Joi.object({
     name: Joi.string()
         .required()
@@ -33,5 +37,5 @@ export const contactSchemeAll = Joi.object({
 export const contactSchemeFavorite = Joi.object({
    favorite: Joi.bool()
          .required()
-         .messages(messagesRequiredErrors)
+         .messages(messagesFavoriteErrors)
 })

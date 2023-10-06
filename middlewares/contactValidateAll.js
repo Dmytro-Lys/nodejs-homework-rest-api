@@ -1,6 +1,6 @@
-import { contactSchemeAll } from '../models/Contact.js';
+import { contactSchemaAll } from '../models/Contact.js';
 import { validateBody } from '../decorators/index.js';
 
-const contactValidateAll = validateBody(contactSchemeAll)
+const contactValidateAll = validateBody(contactSchemaAll)
 
 export default contactValidateAll;

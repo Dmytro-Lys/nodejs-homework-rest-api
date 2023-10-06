@@ -36,7 +36,8 @@ const updateById = async (req, res, next) => {
 
 const updateStatusContact = async (req, res, next) => {
     const { contactId } = req.params;
-    const contact = await Contact.findByIdAndUpdate(contactId , req.body);
+    const {favorite} = req.body
+    const contact = await Contact.findByIdAndUpdate(contactId , {favorite});
     if (!contact) throw HttpError(404, "Not found");
     res.status(200).json(contact);
 }

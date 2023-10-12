@@ -62,7 +62,7 @@ const contactSchemaDB = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'user',
     }
-   },  { versionKey: false })
+   },  { versionKey: false, timestamps: true })
 
 contactSchemaDB.post("save", handleSaveError);
 

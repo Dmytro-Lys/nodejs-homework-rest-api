@@ -1,9 +1,11 @@
 import express from 'express'
 import contactsController from "../../controllers/contacts-controller.js";
-import { isEmptyBody, contactValidateFavorite, contactValidateAll, isValidId } from '../../middlewares/index.js';
+import { isEmptyBody, contactValidateFavorite, contactValidateAll, isValidId, authenticate } from '../../middlewares/index.js';
 
 
 const contactsRouter = express.Router()
+
+contactsRouter.use(authenticate);
 
 contactsRouter.get('/', contactsController.getAll);
 

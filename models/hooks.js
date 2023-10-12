@@ -1,6 +1,5 @@
 export const handleSaveError = (error, data, next) => {
     const { name, code } = error;
-    // console.log(error)
     const email = error.keyValue?.email
     error.status =  400;
     if (name === "MongoServerError" && code === 11000) {

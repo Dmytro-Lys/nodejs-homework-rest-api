@@ -8,4 +8,8 @@ authRouter.post("/register", isEmptyBody, userValidateSignup, authController.sig
 
 authRouter.post("/login", isEmptyBody, userValidateSignin, authController.signin)
 
+authRouter.post("/logout", authenticate, authController.signout);
+
+authRouter.get("/current", authenticate, authController.getCurrent);
+
 export default authRouter;

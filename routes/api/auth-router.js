@@ -4,6 +4,8 @@ import { isEmptyBody, userValidateSignup, userValidateSignin } from '../../middl
 
 const authRouter = express.Router();
 
+authRouter.post("/register", isEmptyBody, userValidateSignup, authController.signup)
 
+authRouter.post("/login", isEmptyBody, userValidateSignin, authController.signin)
 
 export default authRouter;

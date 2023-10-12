@@ -3,10 +3,10 @@ import Joi from "joi";
 
 import { handleSaveError, runValidatorsAtUpdate } from "./hooks.js";
 
-
+// !@#$%^&*()-_=+,<.>/?;:'"\[\]{}|
 const userShemaValidation = {
    password: {
-      regExp: /(?=.*[0-9])(?=.*[!@#$%^&*()-_=+,<.>/?;:'"\[\]{}|])(?=.*[a-z])(?=.*[A-Z])[!@#$%^&*()-_=+,<.>/?;:'"\[\]{}|]{8,}/g,
+      regExp: /(?=.*[0-9])(?=.*[!@#$%^&*()-_=+,<.>/?;:'"\[\]{}|])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*()-_=+,<.>/?;:'"\[\]{}|]{8,}/,
       errorMessage: "The password must contain at least one lowercase letter, one uppercase letter, one number and one special character",
       requiredErrorMessage: 'Set password for user'
    },
@@ -35,7 +35,7 @@ const messagesErrorsJoi = message => {
 }
 
 function addFieldJoi( fieldName) {
-   const {regExp, errorMessage} = contactShemaValidation[fieldName]
+   const {regExp, errorMessage} = userShemaValidation[fieldName]
    return this.string().required()
       .pattern(new RegExp(regExp))
         .messages(messagesErrorsJoi(errorMessage))
@@ -46,7 +46,7 @@ const subscriptionList =  ["starter", "pro", "business"]
 // Mongoose
 const userSchemaDB = new Schema({
    password: { ...addFieldMongoose("password"), minlength: 8 },
-    email: { ...addFieldMongoose("email"), unique: true },
+    email: { ...addFieldMongoose("email"), unique: [true, "Email in use"] },
    subscription: {
     type: String,
     enum: subscriptionList,

@@ -78,4 +78,8 @@ export const userSchemaSignin = Joi.object({
     email: addFieldJoi.call(Joi, "email")
 })
 
+export const userSchemaSubscription = Joi.object({
+   subscription: Joi.string().required().valid(...subscriptionList)
+})
+
 export default User;

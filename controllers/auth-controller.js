@@ -64,9 +64,21 @@ const getCurrent = async(req, res)=> {
     })
 }
 
+const updateSubscriptionUser = async (req, res) => {
+    const { subscription } = req.body;
+    const { _id, email } = req.user;
+     const user = await User.findByIdAndUpdate(_id, { subscription });
+    if (!user) throw HttpError(404, "Not found");
+    res.status(200).json({
+        email,
+        subscription
+    })
+}
+
 export default {
     signup: ctrlWrapper(signup),
     signin: ctrlWrapper(signin),
     signout: ctrlWrapper(signout),
     getCurrent: ctrlWrapper(getCurrent),
+    updateSubscriptionUser: ctrlWrapper(updateSubscriptionUser),
 }

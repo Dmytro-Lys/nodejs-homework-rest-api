@@ -7,6 +7,7 @@ const isValidId = (req, res, next)=> {
     if(!isValidObjectId(id||contactId)) {
         return next(HttpError(404, `${id||contactId} not valid id`))
     }
+    req.filter = {...req.filter, _id : id || contactId}
     next();
 }
 

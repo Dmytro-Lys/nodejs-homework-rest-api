@@ -22,6 +22,8 @@ const authenticate = async(req, res, next)=> {
             throw HttpError(401, "Not authorized");
         }
         req.user = user;
+        req.filter = {owner: id}
+      
         next();
     }
     catch(error) {

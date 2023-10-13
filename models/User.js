@@ -3,7 +3,8 @@ import Joi from "joi";
 
 import { handleSaveError, runValidatorsAtUpdate } from "./hooks.js";
 
-// !@#$%^&*()\-\_=+,<.>/?;:'\[\]{}|
+import { addFieldMongoose, addFieldJoi } from "./validation-tools.js";
+
 const userShemaValidation = {
    password: {
       regExp: /(?=.*[0-9])(?=.*[!@#$%^&*()\-\_=+,<.>/?;:'\[\]{}|])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*()\-\_=+,<.>/?;:'\[\]{}|]+/,
@@ -17,30 +18,6 @@ const userShemaValidation = {
    }
 }
 
-const addFieldMongoose = fieldName => {
-   const {regExp, errorMessage, requiredErrorMessage} = userShemaValidation[fieldName]
-   return {
-      type: String,
-      match: [regExp, errorMessage],
-      required: [true, requiredErrorMessage],
-   }
-}
-
-const messagesErrorsJoi = message => {
-   return {
-      "string.empty": "missing required {#label} field", 
-      "any.required": "missing required {#label} field",
-      "string.pattern.base": message
-   }
-}
-
-function addFieldJoi( fieldName) {
-   const {regExp, errorMessage} = userShemaValidation[fieldName]
-   return this.string().required()
-      .pattern(new RegExp(regExp))
-        .messages(messagesErrorsJoi(errorMessage))
-}
-
 const messagesSubscriptionErrors = {
    "string.empty": "missing field {#label}", 
    "any.required": "missing field {#label}"
@@ -50,8 +27,8 @@ const subscriptionList =  ["starter", "pro", "business"]
 
 // Mongoose
 const userSchemaDB = new Schema({
-   password: { ...addFieldMongoose("password"), minlength: 8 },
-    email: { ...addFieldMongoose("email"), unique: true },
+   password: { ...addFieldMongoose(userShemaValidation.password), minlength: 8 },
+    email: { ...addFieldMongoose(userShemaValidation.email), unique: true },
    subscription: {
     type: String,
     enum: subscriptionList,
@@ -71,16 +48,16 @@ const User = model("user", userSchemaDB);
 
 // Joi
 export const userSchemaSignup = Joi.object({
-   password: addFieldJoi.call(Joi, "password")
+   password: addFieldJoi.call(Joi, userShemaValidation.password)
          .min(8),
-    email: addFieldJoi.call(Joi, "email"),
+    email: addFieldJoi.call(Joi, userShemaValidation.email),
     subscription: Joi.string().valid(...subscriptionList)
 })
 
 export const userSchemaSignin = Joi.object({
-   password: addFieldJoi.call(Joi, "password")
+   password: addFieldJoi.call(Joi, userShemaValidation.password)
          .min(8),
-    email: addFieldJoi.call(Joi, "email")
+    email: addFieldJoi.call(Joi, userShemaValidation.email)
 })
 
 export const userSchemaSubscription = Joi.object({

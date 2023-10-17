@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
+import gravatar from "gravatar";
 
 import User from "../models/User.js";
 import { HttpError } from "../helpers/index.js";
@@ -8,13 +9,15 @@ import { ctrlWrapper } from "../decorators/index.js";
 const {JWT_SECRET} = process.env;
 
 const signup = async(req, res, next) => {
-    const {password} = req.body
-    req.body.password = await bcrypt.hash(password, 10)
-    const { email, subscription } = await User.create(req.body);
+    const {password, email} = req.body
+    req.body.password = await bcrypt.hash(password, 10);
+    req.body.avatarURL =  gravatar.url(email, {protocol: 'https', d: "mp"});
+    const {  subscription, avatarURL } = await User.create(req.body);
     res.status(201).json({
         user: {
       email,
-      subscription
+      subscription,
+      avatarURL
      }
     })
 }

@@ -34,7 +34,8 @@ const userSchemaDB = new Schema({
     enum: subscriptionList,
     default: "starter"
   },
-    token: String
+   avatarURL: String, 
+   token: String
    },  { versionKey: false, timestamps: true })
 
 userSchemaDB.post("save", handleSaveError);

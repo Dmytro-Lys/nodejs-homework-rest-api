@@ -65,4 +65,5 @@ export const userSchemaSubscription = Joi.object({
    subscription: Joi.string().required().valid(...subscriptionList).messages(messagesSubscriptionErrors)
 })
 
+
 export default User;

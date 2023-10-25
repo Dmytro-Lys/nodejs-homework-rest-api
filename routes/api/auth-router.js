@@ -8,7 +8,7 @@ authRouter.post("/register", isEmptyBody, userValidateSignup, authController.sig
 
 authRouter.get("/verify/:verificationToken", authController.verify);
 
-authRouter.post("/verify", isEmptyBody, userValidateEmail, authController.resendVerifyEmail);
+authRouter.post("/verify", userValidateEmail, authController.resendVerifyEmail);
 
 authRouter.post("/login", isEmptyBody, userValidateSignin, authController.signin)
 

@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import Joi, { bool } from "joi";
+import Joi from "joi";
 
 import { handleSaveError, runValidatorsAtUpdate } from "./hooks.js";
 
@@ -74,7 +74,7 @@ export const userSchemaSubscription = Joi.object({
 })
 
 export const userSchemaEmail = Joi.object({
-    email: addFieldJoi.call(Joi, userShemaValidation.email)
+    email: addFieldJoi.call(Joi, userShemaValidation.email, "missing required field email")
 })
 
 

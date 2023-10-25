@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import Joi from "joi";
+import Joi, { bool } from "joi";
 
 import { handleSaveError, runValidatorsAtUpdate } from "./hooks.js";
 
@@ -35,7 +35,15 @@ const userSchemaDB = new Schema({
     default: "starter"
   },
    avatarURL: String, 
-   token: String
+   token: String,
+   verificationToken: {
+      type: String,
+      required: [true, 'Verify token is required'],
+   },
+   verify: {
+        type: Boolean,
+        default: false,
+    },
    },  { versionKey: false, timestamps: true })
 
 userSchemaDB.post("save", handleSaveError);
@@ -63,6 +71,10 @@ export const userSchemaSignin = Joi.object({
 
 export const userSchemaSubscription = Joi.object({
    subscription: Joi.string().required().valid(...subscriptionList).messages(messagesSubscriptionErrors)
+})
+
+export const userSchemaEmail = Joi.object({
+    email: addFieldJoi.call(Joi, userShemaValidation.email)
 })
 
 

@@ -6,16 +6,17 @@ export const addFieldMongoose = ({regExp, errorMessage, requiredErrorMessage}) =
    }
 }
 
-const messagesErrorsJoi = message => {
+const messagesErrorsJoi = (message, messageRequired ) => {
+   const defaultMessage = "missing required {#label} field"
    return {
-      "string.empty": "missing required {#label} field", 
-      "any.required": "missing required {#label} field",
+      "string.empty": messageRequired ? messageRequired : defaultMessage , 
+      "any.required": messageRequired ? messageRequired : defaultMessage,
       "string.pattern.base": message
    }
 }
 
-export function addFieldJoi(  {regExp, errorMessage}) {
+export function addFieldJoi(  {regExp, errorMessage}, messageRequired ='') {
    return this.string().required()
       .pattern(new RegExp(regExp))
-        .messages(messagesErrorsJoi(errorMessage))
+        .messages(messagesErrorsJoi(errorMessage, messageRequired))
 }
